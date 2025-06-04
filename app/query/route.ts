@@ -20,6 +20,6 @@ export async function GET() {
     const invoices = await fetchCardData();
     return Response.json(invoices);
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ status: 500 });
   }
 }
