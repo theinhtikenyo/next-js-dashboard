@@ -2,7 +2,7 @@
 import { z } from 'zod';
 import postgres from 'postgres';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl:require });
 
 
@@ -40,17 +40,23 @@ export async function updateInvoice(id:string, formData: FormData) {
         status: formData.get('status'),
     });
     const amountInCents = amount * 100;
-    await sql`
+    try {
+
+        await sql`
         UPDATE invoices
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
-    `;
+        `;
+    } catch(error) {
+        console.error(error);
+    }
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
 }
 
 
 export async function deleteInvoice(id:string) {
+    notFound();
     await sql`
         DELETE from invoices where id = ${id}
     `;
