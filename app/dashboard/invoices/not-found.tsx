@@ -7,12 +7,12 @@ export default function NotFound() {
       <FaceSmileIcon className="w-10 text-gray-400" />
       <h2 className="text-xl font-semibold">Well Played</h2>
       <p>Nice try bro!</p>
-      <Link
+      <a
         href="/dashboard/invoices"
         className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"
       >
         Go Back
-      </Link>
+      </a>
     </main>
   );
 }
